@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebApplication1.Models;
+using WebApplication1.Repositories;
 
 namespace WebApplication1
 {
@@ -26,6 +28,21 @@ namespace WebApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            string connectionString = Configuration["ConnectionStrings:dbconnection"];
+            // Add this file to inject StudentDbContext into the project
+            services.AddDbContext<FileDbContext>(a => a.UseSqlServer(connectionString));
+
+            services.AddScoped<IMovieRepository, MovieRepository>();
+
+            services.AddSwaggerGen(a =>
+            {
+                a.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "Movie Review api",
+                    Version = "v1"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +58,12 @@ namespace WebApplication1
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSwagger();
+
+            app.UseSwaggerUI(a =>
+            {
+                a.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie Review api");
+            });
 
             app.UseEndpoints(endpoints =>
             {

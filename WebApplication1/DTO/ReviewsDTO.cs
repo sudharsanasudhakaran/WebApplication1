@@ -7,8 +7,8 @@ namespace WebApplication1.DTO
 {
     public class ReviewsDTO
     {
-        public int RevId { get; set; }
-        public string ReviewContent { get; set; }
-        public string ReviewForMovie { get; set; }
+        public int ReviewId { get; set; }
+        public string ReviewText { get; set; }
+        public string Review { get; set; }
     }
 }

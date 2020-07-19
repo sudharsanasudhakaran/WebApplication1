@@ -29,9 +29,9 @@ namespace WebApplication1.Repositories
             {
                 reviewData.Add(new ReviewsDTO
                 {
-                    RevId = review.Id,
-                    ReviewContent = review.ReviewString,
-                    ReviewForMovie = review.Movie.Name
+                    ReviewId = review.Id,
+                    ReviewText = review.ReviewString,
+                    Review = review.Movie.Name
                 });
             }
             return reviewData;
